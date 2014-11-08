@@ -1,0 +1,13 @@
+%b
+  Revenue sources:
+%br
+
+- if @sources.empty?
+  No revenue sources found.
+- else
+  %ul
+    - for source in @sources
+      %li
+        = source.name
+
+= link_to "Add new source", new_revenue_source_path
