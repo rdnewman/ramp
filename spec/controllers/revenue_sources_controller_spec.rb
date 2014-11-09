@@ -54,5 +54,4 @@ RSpec.describe RevenueSourcesController, type: :controller do
 
   end
 
-
 end
