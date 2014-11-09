@@ -14,8 +14,13 @@ class RevenueSourcesController < ApplicationController
 
   def create
     _params = revenue_source_params
-    RevenueSource.create(_params)
-    flash[:notice] = "Added #{_params[:name]}."
+    begin
+      RevenueSource.create(_params)
+      flash[:success] = "Added #{_params[:name]}."
+    rescue StandardError => e
+      Rails.logger.error "[RevenueSourcesController#create] failed, error = #{e.inspect}"
+      flash[:error] = "Unable to add #{_params[:name]}."
+    end
     redirect_to revenue_sources_path
   end
 

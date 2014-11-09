@@ -27,17 +27,31 @@ RSpec.describe RevenueSourcesController, type: :controller do
       expect(response).to redirect_to revenue_sources_path
     end
 
-    it 'adds a record' do
+    it 'adds a record if well formed input' do
       expect {
         post :create, revenue_source: FactoryGirl.attributes_for(:revenue_source)
       }.to change{RevenueSource.count}.by(1)
     end
 
-    it 'fails if no input supplied' do
+    it 'fails with error if no input supplied' do
       expect {
         post :create, revenue_source: nil
       }.to raise_error ActionController::ParameterMissing
     end
+
+    it 'will not add a record if missing name parameter' do
+      _params = {b: 'something'}
+      expect {
+        post :create, revenue_source: _params
+      }.to change{RevenueSource.count}.by(0)
+    end
+
+    it 'returns to list if missing name parameter' do
+      _params = {b: 'something'}
+      post :create, revenue_source: _params
+      expect(response).to redirect_to revenue_sources_path
+    end
+
   end
 
 
