@@ -5,6 +5,7 @@ gem 'mysql2'
 
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'react-rails', github: 'reactjs/react-rails', branch: 'master'
 
 gem 'haml'
 gem 'sass-rails'

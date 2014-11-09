@@ -1,7 +1,11 @@
 class RevenueSourcesController < ApplicationController
+  respond_to :html, :json, only: [:index]
 
   def index
-    @sources = RevenueSource.all
+    respond_with do |format|
+      format.html { render }
+      format.json { render json: RevenueSource.all }
+    end
   end
 
   def new

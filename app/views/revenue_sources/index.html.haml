@@ -1,13 +1,7 @@
-%b
-  Revenue sources:
-%br
+%section
+  %header
+    %h1 Revenue sources:
 
-- if @sources.empty?
-  No revenue sources found.
-- else
-  %ul
-    - for source in @sources
-      %li
-        = source.name
+  = react_component 'RevenueSourcesSection', {}, :div
 
 = link_to "Add new source", new_revenue_source_path
