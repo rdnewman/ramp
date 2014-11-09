@@ -1,10 +1,9 @@
-%b
-  New revenue sources:
-%br
+%h1
+  New revenue source:
 
 = form_for @source do |f|
   = f.label :name
   = ':'
   = f.text_field :name
-
+  %br
   = f.submit
