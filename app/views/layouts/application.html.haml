@@ -11,8 +11,4 @@
   %body
     %div.container
       %div#flash_messages
-        - flash.each do |level, message|
-          %div{class: "#{flash_class(level)}"}<
-            = message
-
       = yield
