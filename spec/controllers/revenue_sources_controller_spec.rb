@@ -22,14 +22,9 @@ RSpec.describe RevenueSourcesController, type: :controller do
   end
 
   describe "'POST' create" do
-    it 'succeeds with :created status if well formed input' do
-      post :create, revenue_source: FactoryGirl.attributes_for(:revenue_source)
-      expect(response).to have_http_status :created
-    end
-
     it 'succeeds if well formed input and returns to list' do
       post :create, revenue_source: FactoryGirl.attributes_for(:revenue_source)
-      expect(response.location).to eq revenue_sources_url
+      expect(response.location).to redirect_to revenue_sources_path
     end
 
     it 'adds a record if well formed input' do

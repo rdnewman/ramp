@@ -26,7 +26,7 @@ class RevenueSourcesController < ApplicationController
         Rails.logger.error "[RevenueSourcesController#create] failed, error = #{e.inspect}"
         flash[:error] = "Unable to add #{_params[:name]}."
       end
-      redirect_to revenue_sources_path, status: :created
+      redirect_to revenue_sources_path
     end
   end
 
