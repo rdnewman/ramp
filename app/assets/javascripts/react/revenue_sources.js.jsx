@@ -1,53 +1,83 @@
 /** @jsx React.DOM */
 
-/*var RevenueSourceListItem = React.createClass({
-  getInitialState: function() {
-    return { color: 'black' };
+var RevenueSourceForm = React.createClass({
+  _onSubmit: function(e) {
+    e.preventDefault();
+
+    var _url = 'revenue_sources/' + this.props.id;
+
+    var _name = this.refs.name.getDOMNode().value.trim();
+    var _rs  = { revenue_source: {name: _name }};
+
+    // TODO: send request to the server
+    $.ajax({
+      url: _url,
+      dataType: 'json',
+      type: 'PUT',
+      data: _rs,
+      success: this._submitSuccess,
+      error:   this._submitError
+    });
+    return;
   },
 
-  _onClick: function() {
-    this.setState({color: 'green' });
+  _submitSuccess: function(data) {
+    _id = data.id;
+    delete data.id
+    this.props.onClose(_id, data);
+  },
 
-
-    //this.style.color = green;
-    //this.setState({ color: 'green' });
+  _submitError: function(xhr, status, err) {
+    console.error(this.props.url, status, err.toString());
   },
 
   render: function() {
-    return <li id={this.state.id} onClick={this._onClick} style={ {color: this.state.color} }>{this.props.item.name}</li>;
-  }
-});
-*/
-
-var RevenueSourceDetail = React.createClass({
-  render: function() {
-    if (this.props.showDetail) {
-      return (
-        <div>
-          hello
-        </div>
-      )
-    } else {
-      return ( null )
-    }
+    return (
+      <form>
+        Rename: <input type='text' ref='name' placeholder='Name' defaultValue={this.props.value.name}/>
+        <br/>
+        <input type='submit' value='Update' onClick={this._onSubmit} />
+        <input type='button' value='Cancel' onClick={this.props.onClose.bind(this, null, null)} />
+      </form>
+    );
   }
 });
 
 var RevenueSourceListItem = React.createClass({
   getInitialState: function() {
-    return { showDetail: false };
+    return {show: false};
   },
 
   _onClick: function() {
-    this.setState({showDetail: this.state.showDetail ? false : true });
+    this.setState({show: this.state.show ? false : true});
+  },
+
+  _onClose: function(id, value) {
+    if (id && value) {
+      this.props.updateItem(id, value);
+    }
+    this.setState({show: false});
+  },
+
+  _renderDetail: function() {
+    if (this.state.show) {
+      return (
+        <div className='panel panel-body'>
+          <RevenueSourceForm onClose={this._onClose} id={this.props.id} value={this.props.value}/>
+        </div>
+      )
+    } else {
+      return null;
+    }
   },
 
   render: function() {
-    var _display = this.state.showDetail ? null : { display: 'none' };
     return (
-      <li onClick={this._onClick}>
-        {this.props.item.name}
-        <RevenueSourceDetail showDetail={this.state.showDetail}/>
+      <li>
+        <span onClick={this._onClick}>
+          {this.props.value.name}
+        </span>
+        {this._renderDetail()}
       </li>
     )
   }
@@ -55,11 +85,19 @@ var RevenueSourceListItem = React.createClass({
 
 var RevenueSourcesSection = React.createClass({
   getInitialState: function() {
-    return { data: [] };
+    return { items: undefined };
   },
 
   componentDidMount: function() {
     this._fetch({})
+  },
+
+  _updateItem: function(id, value) {
+    if (this.state.items && id && value) {
+      _items = this.state.items;
+      _items[id] = value;
+      this.setState({items: _items});
+    }
   },
 
   _fetch: function() {
@@ -73,7 +111,14 @@ var RevenueSourcesSection = React.createClass({
 
   _fetchSuccess: function(data) {
     if (this.isMounted()) {
-      this.setState({data: data});
+      // build objects of objects, keyed on id
+      var hash = data.reduce(function(map, obj) {
+        id = obj.id
+        delete obj.id
+        map[id] = obj;
+        return map;
+      }, {});
+      this.setState({items: hash});
     }
   },
 
@@ -82,12 +127,17 @@ var RevenueSourcesSection = React.createClass({
   },
 
   render: function() {
-    return (
-      <ul>
-      {this.state.data.map(function(item) {
-        return <RevenueSourceListItem key={item.id} item={item}/>;
-      })}
-      </ul>
-    );
+    if ( this.state.items ) {
+      keys = Object.keys(this.state.items);
+      return (
+        <ul>
+        {keys.map(function(key) {
+          return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem}/>;
+        }.bind(this))}
+        </ul>
+      );
+    } else {
+      return null;
+    }
   }
 });

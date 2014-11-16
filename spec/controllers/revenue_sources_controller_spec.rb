@@ -54,4 +54,31 @@ RSpec.describe RevenueSourcesController, type: :controller do
 
   end
 
+  describe "'PUT' update" do
+
+    let(:source) { FactoryGirl.create(:revenue_source) }
+
+    it 'succeeds if well formed input and returns to list' do
+      Rails.logger.info 'succeeds if well formed input and returns to list'
+      _params = { name: 'different' }
+      put :update, id: source.id, revenue_source: _params
+      expect(response).to redirect_to revenue_sources_path
+    end
+
+    it 'fails with error if no input supplied' do
+      Rails.logger.info 'fails with error if no input supplied'
+      expect {
+        put :update, id: source.id, revenue_source: nil
+      }.to raise_error ActionController::ParameterMissing
+    end
+
+    it 'returns to list if missing name parameter' do
+      Rails.logger.info 'returns to list if missing name parameter'
+      _params = {b: 'something'}
+      put :update, id: source.id, revenue_source: _params
+      expect(response).to redirect_to revenue_sources_path
+    end
+
+  end
+
 end
