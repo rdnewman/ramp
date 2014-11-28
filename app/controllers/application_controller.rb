@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   after_filter :flash_to_http_header
 
 private
-
   def flash_to_http_header
     return unless request.xhr?
     return if flash.empty?

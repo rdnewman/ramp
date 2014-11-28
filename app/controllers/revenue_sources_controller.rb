@@ -32,9 +32,11 @@ class RevenueSourcesController < ApplicationController
 
   def update
     _row = RevenueSource.find_by_id(params[:id])
+    _oldname = _row.name
+
     _params = revenue_source_params
     if _params.empty?
-      flash[:error] = "Unable to update #{_params[:name]} due to client error."
+      flash[:error] = "Unable to update #{_oldname} due to client error."
       respond_with do |format|
         format.json { render json: _row, status: :bad_request }
         format.html { redirect_to revenue_sources_path, status: :bad_request }
@@ -42,10 +44,10 @@ class RevenueSourcesController < ApplicationController
     else
       begin
         _row.update_attributes(_params)
-        flash[:success] = "Updated #{_params[:name]}."
+        flash[:success] = "Updated #{_oldname} to #{_params[:name]}."
       rescue StandardError => e
         Rails.logger.error "[RevenueSourcesController#update] failed, error = #{e.inspect}"
-        flash[:error] = "Unable to update #{_params[:name]}."
+        flash[:error] = "Unable to update #{_oldname}."
       end
       respond_with do |format|
         format.json { render json: _row }
