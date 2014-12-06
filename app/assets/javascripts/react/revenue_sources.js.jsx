@@ -73,12 +73,14 @@ var RevenueSourceListItem = React.createClass({
 
   render: function() {
     return (
-      <li>
-        <span onClick={this._onClick}>
-          {this.props.value.name}
-        </span>
-        {this._renderDetail()}
-      </li>
+      <tr>
+        <td>
+          <span onClick={this._onClick}>
+            {this.props.value.name}
+          </span>
+          {this._renderDetail()}
+        </td>
+      </tr>
     )
   }
 });
@@ -130,11 +132,13 @@ var RevenueSourcesSection = React.createClass({
     if ( this.state.items ) {
       keys = Object.keys(this.state.items);
       return (
-        <ul>
-        {keys.map(function(key) {
-          return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem}/>;
-        }.bind(this))}
-        </ul>
+        <table className='table table-hover'>
+          <tbody>
+            {keys.map(function(key) {
+              return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem}/>;
+            }.bind(this))}
+          </tbody>
+        </table>
       );
     } else {
       return null;

@@ -16,5 +16,7 @@
 //= require react
 //= require react_ujs
 //= require bootstrap-sprockets
+//= require bootstrap-editable
+//= require bootstrap-editable-rails
 //= require_tree .
 

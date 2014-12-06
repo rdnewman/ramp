@@ -12,6 +12,8 @@ gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
+gem 'bootstrap-editable-rails'
+
 gem 'uglifier'
 
 group :development do
