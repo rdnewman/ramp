@@ -1,84 +1,39 @@
 /** @jsx React.DOM */
 
-var RevenueSourceForm = React.createClass({
-  _onSubmit: function(e) {
-    e.preventDefault();
-
-    var _url = 'revenue_sources/' + this.props.id;
-
-    var _name = this.refs.name.getDOMNode().value.trim();
-    var _rs  = { revenue_source: {name: _name }};
-
-    // TODO: send request to the server
-    $.ajax({
-      url: _url,
-      dataType: 'json',
-      type: 'PUT',
-      data: _rs,
-      success: this._submitSuccess,
-      error:   this._submitError
-    });
-    return;
-  },
-
-  _submitSuccess: function(data) {
-    _id = data.id;
-    delete data.id
-    this.props.onClose(_id, data);
-  },
-
-  _submitError: function(xhr, status, err) {
-    console.error(this.props.url, status, err.toString());
-  },
-
-  render: function() {
-    return (
-      <form>
-        Rename: <input type='text' ref='name' placeholder='Name' defaultValue={this.props.value.name}/>
-        <br/>
-        <input type='submit' value='Update' onClick={this._onSubmit} />
-        <input type='button' value='Cancel' onClick={this.props.onClose.bind(this, null, null)} />
-      </form>
-    );
-  }
-});
-
 var RevenueSourceListItem = React.createClass({
-  getInitialState: function() {
-    return {show: false};
+  componentDidMount: function() {
+    $(this.refs.editableName.getDOMNode()).editable({
+      type: 'text',
+      pk: this.props.id,
+      url: 'revenue_sources/' + this.props.id,
+      title: 'rename:',
+      params: this._editParams,
+      success: this._editSuccess,
+      error: this._editError
+    });
   },
 
-  _onClick: function() {
-    this.setState({show: this.state.show ? false : true});
+  _editParams: function(params) {
+    return {revenue_source: {name: params.value}};
   },
 
-  _onClose: function(id, value) {
-    if (id && value) {
-      this.props.updateItem(id, value);
+  _editSuccess: function(response, value) {
+    if (response.id && value) {
+      this.props.updateItem(response.id, value);
     }
-    this.setState({show: false});
+    $(this.refs.editableName.getDOMNode()).editable('hide');
   },
 
-  _renderDetail: function() {
-    if (this.state.show) {
-      return (
-        <div className='panel panel-body'>
-          <RevenueSourceForm onClose={this._onClose} id={this.props.id} value={this.props.value}/>
-        </div>
-      )
-    } else {
-      return null;
-    }
+  _editError: function(response, value) {
+    console.error(this.props.url, response.status, response.responseText);
   },
 
   render: function() {
+    var _url = 'revenue_sources/' + this.props.id;
     return (
       <tr>
         <td>
-          <span onClick={this._onClick}>
-            {this.props.value.name}
-          </span>
-          {this._renderDetail()}
+          <a href="#" ref="editableName">{this.props.value.name}</a>
         </td>
       </tr>
     )
@@ -128,15 +83,18 @@ var RevenueSourcesSection = React.createClass({
     console.error(this.props.url, status, err.toString());
   },
 
+  _renderItems: function(_keys) {
+    return _keys.map(function(key) {
+      return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem}/>;
+    }.bind(this))
+  },
+
   render: function() {
     if ( this.state.items ) {
-      keys = Object.keys(this.state.items);
       return (
         <table className='table table-hover'>
           <tbody>
-            {keys.map(function(key) {
-              return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem}/>;
-            }.bind(this))}
+            {this._renderItems(Object.keys(this.state.items))}
           </tbody>
         </table>
       );

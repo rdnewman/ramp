@@ -17,6 +17,9 @@
 //= require react_ujs
 //= require bootstrap-sprockets
 //= require bootstrap-editable
-//= require bootstrap-editable-rails
 //= require_tree .
+
+// Defaults for bootstrap-editable
+$.fn.editable.defaults.mode = 'inline';
+$.fn.editable.defaults.ajaxOptions = {type: 'PUT'};
 
