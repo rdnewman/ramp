@@ -1,39 +1,81 @@
 /** @jsx React.DOM */
 
 var RevenueSourceListItem = React.createClass({
-  componentDidMount: function() {
-    $(this.refs.editableName.getDOMNode()).editable({
-      type: 'text',
-      pk: this.props.id,
-      url: 'revenue_sources/' + this.props.id,
-      title: 'rename:',
-      params: this._editParams,
-      success: this._editSuccess,
-      error: this._editError
-    });
+  getInitialState: function() {
+    return { editing: false };
+  },
+  _edit:     function() { this.setState({editing: true});  },
+  _readonly: function() { this.setState({editing: false}); },
+
+  _onSubmit: function(e) {
+    e.preventDefault();
+    clearFlashMessages();
+    this._submit(this.refs.editableName.getDOMNode().value.trim());
+    this._readonly();
   },
 
-  _editParams: function(params) {
-    return {revenue_source: {name: params.value}};
+  _onCancel: function(e) {
+    e.preventDefault();
+    clearFlashMessages();
+    this._readonly();
   },
 
-  _editSuccess: function(response, value) {
-    if (response.id && value) {
-      this.props.updateItem(response.id, value);
+  _submit: function(_value) {
+    if (_value && (this.props.value.name != _value)) { // don't submit if unchanged or null
+      var _url = 'revenue_sources/' + this.props.id;
+      var _rs  = { revenue_source: { name: _value }};
+
+      $.ajax({
+        url: _url,
+        type: 'PUT',
+        data: _rs,
+        dataType: 'json',
+        success: this._submitSuccess,
+        error:   this._submitError
+      });
     }
-    $(this.refs.editableName.getDOMNode()).editable('hide');
+    return;
   },
 
-  _editError: function(response, value) {
-    console.error(this.props.url, response.status, response.responseText);
+  _submitSuccess: function(data) {
+    _id = data.id;
+    delete data.id
+    if (_id && data) {
+      this.props.updateItem(_id, data);
+    }
+  },
+
+  _submitError: function(xhr, status, errorText) {
+    console.error("[RevenueSourceListItem._submitError] status: %s, errorText: %s", status, (errorText.length > 0 ? errorText : '[empty]'));
+  },
+
+  _renderField: function () {
+    if (this.state.editing) {
+      return (
+        <form>
+          <input type='text' ref='editableName' placeholder='Name' defaultValue={this.props.value.name}/>
+          <button type="submit" className="btn btn-primary btn-sm" onClick={this._onSubmit} >
+            <i className="glyphicon glyphicon-ok" />
+          </button>
+          <button type="button" className="btn btn-default btn-sm" onClick={this._onCancel} >
+            <i className="glyphicon glyphicon-remove" />
+          </button>
+        </form>
+      );
+    } else {
+      return (
+        <span ref='editableName' onClick={this._edit}>
+          {this.props.value.name}
+        </span>
+      );
+    }
   },
 
   render: function() {
-    var _url = 'revenue_sources/' + this.props.id;
     return (
       <tr>
         <td>
-          <a href="#" ref="editableName">{this.props.value.name}</a>
+          {this._renderField()}
         </td>
       </tr>
     )
