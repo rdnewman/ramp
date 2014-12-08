@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 private
   def flash_to_http_header
     return unless request.xhr?
-    return if flash.empty?
     response.headers['X-FlashMessages'] = flash.to_hash.to_json
     flash.discard  # don't want the flash to appear when you reload page
   end

@@ -2,27 +2,35 @@
 
 var FlashMessages = React.createClass({
   getInitialState: function() {
-    return {messages: this.props.messages};
+    return {messages: null};
   },
 
   messages: function (messageArray) {
     this.setState({messages: messageArray});
   },
 
+  clear: function() {
+    this.setState({messages: null});
+  },
+
   render: function() {
-    return (
-      <div className='flash_messages_component'>
-        {this.state.messages.map(function(message, index) {
-          _level = message[0];
-          _text  = message[1];
-          return (
-            <div key={index} className={this._flash_class(_level)}>
-              {_text}
-            </div>
-          );
-        }.bind(this))}
-      </div>
-    )
+    if (this.state.messages) {
+      return (
+        <div className='flash_messages_component'>
+          {this.state.messages.map(function(message, index) {
+            _level = message[0];
+            _text  = message[1];
+            return (
+              <div key={index} className={this._flash_class(_level)}>
+                {_text}
+              </div>
+            );
+          }.bind(this))}
+        </div>
+      )
+    } else {
+      return null;
+    }
   },
 
   _flash_class: function(level) {
@@ -57,9 +65,12 @@ function handleFlashMessageHeader(node, xhr) {
   node.messages(_message_array);
 }
 
+function clearFlashMessages() {
+  flashDiv.clear();
+}
+
 $(document).ready(function() {
-  var dummy = new Array();
-  var flashDiv = React.render(<FlashMessages messages={dummy} />, $('#flash_messages')[0]);
+  window.flashDiv = React.render(<FlashMessages/>, $('#flash_messages')[0]);
 
   $(document).ajaxComplete(function(event, xhr, settings) {
     handleFlashMessageHeader(flashDiv, xhr);
