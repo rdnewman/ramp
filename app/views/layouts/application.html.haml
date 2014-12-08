@@ -10,9 +10,5 @@
 
   %body
     %div.container
-      %div#flash_message
-        - if flash[:notice]
-          = flash[:notice]
-          %br
-
+      %div#flash_messages
       = yield

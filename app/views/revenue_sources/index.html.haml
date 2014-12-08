@@ -1,7 +1,5 @@
 %section
   %header
-    %h1 Revenue sources:
-
+    %h3 Revenue sources:
+  = link_to "Add new source", new_revenue_source_path
   = react_component 'RevenueSourcesSection', {}, :div
-
-= link_to "Add new source", new_revenue_source_path
