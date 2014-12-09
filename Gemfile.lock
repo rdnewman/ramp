@@ -65,6 +65,12 @@ GEM
       tilt
     hike (1.2.3)
     i18n (0.6.11)
+    jasmine (2.0.2)
+      jasmine-core (~> 2.0.0)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.0.1)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -76,6 +82,7 @@ GEM
     minitest (5.4.2)
     multi_json (1.10.1)
     mysql2 (0.3.16)
+    phantomjs (1.9.7.1)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -155,6 +162,7 @@ DEPENDENCIES
   bootstrap-sass
   factory_girl_rails
   haml
+  jasmine
   jquery-rails
   mysql2
   rails (>= 4.1)
