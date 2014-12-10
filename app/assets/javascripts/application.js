@@ -16,4 +16,5 @@
 //= require react
 //= require react_ujs
 //= require bootstrap-sprockets
+//= require pluralize
 //= require_tree .

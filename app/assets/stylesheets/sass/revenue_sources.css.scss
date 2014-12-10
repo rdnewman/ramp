@@ -3,5 +3,11 @@
   They will automatically be included in application.css.
 */
 button.btn {
-  margin-left: 3px;
+  margin-left: .5em;
+}
+
+.editable {
+  &:hover {
+    border-bottom: 1px dotted;
+  }
 }
