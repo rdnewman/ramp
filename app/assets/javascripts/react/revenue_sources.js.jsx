@@ -1,5 +1,45 @@
 /** @jsx React.DOM */
 
+/*
+var RevenueSourceNewItem = React.createClass({
+<form>
+  <input type='text' ref='editableField' defaultValue={this.props.value}/>
+  <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
+    <i className='glyphicon glyphicon-ok' />
+  </button>
+  <button type='button' className='btn btn-default btn-sm' onClick={this._onCancel} >
+    <i className='glyphicon glyphicon-remove' />
+  </button>
+</form>
+  render: function() {
+    var _key = this.props.key;
+    var _id = this.props.id;
+    var _table = 'revenue_sources';
+    var _value = this.props.value;
+    var _update = this.props.updateItem;
+    return (
+      <form>
+        <input type='text' defaultValue=''/>
+        <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
+          <i className='glyphicon glyphicon-plus' />
+        </button>
+        <button type='button' className='btn btn-default btn-sm' onClick={this._onCancel} >
+          <i className='glyphicon glyphicon-remove' />
+        </button>
+      </form>
+
+
+
+      <tr>
+        <td>
+          <EditableField key={_key} id={_id} fieldTable={_table} fieldName='name' value={_value.name} updateItem={_update}/>
+        </td>
+      </tr>
+    );
+  }
+});
+*/
+
 var RevenueSourceListItem = React.createClass({
   render: function() {
     var _key = this.props.key;
@@ -69,6 +109,10 @@ var RevenueSourcesSection = React.createClass({
   render: function() {
     if ( this.state.items ) {
       return (
+        <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
+          <i className='glyphicon glyphicon-ok' />
+        </button>
+
         <table className='table table-hover'>
           <tbody>
             {this._renderItems(Object.keys(this.state.items))}

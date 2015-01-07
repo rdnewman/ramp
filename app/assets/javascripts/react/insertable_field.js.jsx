@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 
-var EditableField = React.createClass({
+var InsertableField = React.createClass({
   propTypes: {
-    id:         React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
     fieldTable: React.PropTypes.string.isRequired,
-    fieldName:  React.PropTypes.string.isRequired,
+    fieldName: React.PropTypes.string.isRequired,
     updateItem: React.PropTypes.func.isRequired
   },
   getDefaultProps : function() {
@@ -20,7 +20,7 @@ var EditableField = React.createClass({
   _onSubmit: function(e) {
     e.preventDefault();
     clearFlashMessages();
-    this._submit(this.refs.editableField.getDOMNode().value.trim());
+    this._submit(this.refs.insertableField.getDOMNode().value.trim());
     this._readonly();
   },
 
@@ -64,16 +64,16 @@ var EditableField = React.createClass({
   },
 
   _submitError: function(xhr, status, errorText) {
-    console.error("[EditableField._submitError] status: %s, errorText: %s", status, (errorText.length > 0 ? errorText : '[empty]'));
+    console.error("[InsertableField._submitError] status: %s, errorText: %s", status, (errorText.length > 0 ? errorText : '[empty]'));
   },
 
   render: function() {
     if (this.state.editing) {
       return (
         <form>
-          <input type='text' ref='editableField' defaultValue={this.props.value}/>
+          <input type='text' ref='insertableField' defaultValue={this.props.value}/>
           <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
-            <i className='glyphicon glyphicon-ok' />
+            <i className='glyphicon glyphicon-plus' />
           </button>
           <button type='button' className='btn btn-default btn-sm' onClick={this._onCancel} >
             <i className='glyphicon glyphicon-remove' />
@@ -82,7 +82,7 @@ var EditableField = React.createClass({
       );
     } else {
       return (
-        <span ref='editableField' className='editable' onClick={this._edit}>
+        <span ref='insertableField' className='insertable' onClick={this._edit}>
           {this.props.value}
         </span>
       );
