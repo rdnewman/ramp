@@ -9,7 +9,7 @@ gem 'turbolinks'
 gem 'react-rails', github: 'reactjs/react-rails', branch: 'master'
 
 gem 'haml'
-gem 'sass-rails'
+gem 'sass-rails', '< 5.0'    # 5.0.1 (latest as of writing) has issue with wildcard import (https://github.com/rails/sass-rails/issues/185)
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
