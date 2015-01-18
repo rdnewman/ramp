@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '>= 4.1'
 gem 'mysql2'
+gem 'responders', '~> 2.0'
 
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -26,4 +27,3 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'jasmine'
 end
-
