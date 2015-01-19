@@ -36,7 +36,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # For CI deployment
-  config.secret_key_base = ENV["SECRET_KEY_BASE"]
+  config.secret_key_base = 'semaphore' #ENV["SECRET_KEY_BASE"]
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
