@@ -21,9 +21,6 @@ require 'simplecov'
 CodeClimate::TestReporter.start
 SimpleCov.start
 
-#CodeClimate::TestReporter.start
-#SimpleCov.start
-
 RSpec.configure do |config|
 
   # These two settings work together to allow you to limit a spec run
