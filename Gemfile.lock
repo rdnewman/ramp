@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/reactjs/react-rails.git
-  revision: 579a91a917b9577a16938d4ab4a097ab394d9282
+  revision: 85a27bcc0faa6de8ca4fba72c8dc548ff3276032
   branch: master
   specs:
     react-rails (1.0.0.pre)
@@ -50,8 +50,9 @@ GEM
     arel (6.0.0)
     autoprefixer-rails (5.0.0.1)
       execjs
-    bootstrap-sass (3.3.1.0)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.2.0)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     codeclimate-test-reporter (0.4.5)
       simplecov (>= 0.7.1, < 1.0.0)
