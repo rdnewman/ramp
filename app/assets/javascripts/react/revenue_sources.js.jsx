@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 /*
 var RevenueSourceNewItem = React.createClass({
 <form>
@@ -109,15 +108,16 @@ var RevenueSourcesSection = React.createClass({
   render: function() {
     if ( this.state.items ) {
       return (
-        <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
-          <i className='glyphicon glyphicon-ok' />
-        </button>
-
-        <table className='table table-hover'>
-          <tbody>
-            {this._renderItems(Object.keys(this.state.items))}
-          </tbody>
-        </table>
+        <div>
+          <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
+            <i className='glyphicon glyphicon-ok' />
+          </button>
+          <table className='table table-hover'>
+            <tbody>
+              {this._renderItems(Object.keys(this.state.items))}
+            </tbody>
+          </table>
+        </div>
       );
     } else {
       return null;
