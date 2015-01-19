@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '>= 4.1'
 gem 'mysql2'
+gem 'responders', '~> 2.0'
 
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -18,12 +19,12 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'jasmine'
+  gem 'jasmine-rails'
 end
-

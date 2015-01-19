@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
+
   root 'revenue_sources#index'
 
   resources :revenue_sources, only: [:index, :new, :create, :update]
