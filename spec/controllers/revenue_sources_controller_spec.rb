@@ -124,8 +124,10 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _oldtime = _row.updated_at
         _params = { name: "#{source.name}CHANGE" }
 
+        sleep 0.6  # assure it is sufficiently later (server time drift)
+
         # test
-        put :update, :format => :json, id: source.id, revenue_source: _params
+        put :update, format: :json, id: source.id, revenue_source: _params
         json_response = JSON(response.body)
         expect(json_response['updated_at']).to be > _oldtime
       end
@@ -137,7 +139,7 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _params = {b: 'something'}
 
         # test
-        put :update, :format => :json, id: source.id, revenue_source: _params
+        put :update, format: :json, id: source.id, revenue_source: _params
         expect(response).to have_http_status :bad_request
       end
 
