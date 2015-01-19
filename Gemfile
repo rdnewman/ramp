@@ -20,7 +20,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :development, :test do
