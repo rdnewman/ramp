@@ -51,7 +51,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - '**/*[sS]pec.js'
+  - '**/*[sS]pec.{js}'
 
 # src_dir
 #
@@ -121,4 +121,3 @@ boot_files:
 #
 # rack_options:
 #   server: 'thin'
-
