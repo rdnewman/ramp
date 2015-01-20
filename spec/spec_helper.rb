@@ -17,11 +17,9 @@
 if ENV['SEMAPHORE'] == 'true'
   require "codeclimate-test-reporter"
   CodeClimate::TestReporter.start
-  puts "[spec_helper.rb] in ENV=CI"
 else
   require 'simplecov'
   SimpleCov.start
-  puts "[spec_helper.rb] not ENV=CI!"
 end
 
 RSpec.configure do |config|
