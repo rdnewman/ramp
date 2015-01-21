@@ -1,0 +1,17 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/npm/npm.git"
+  },
+  "devDependencies": {
+    "karma": "^0.12.31",
+    "karma-coverage": "^0.2.7",
+    "karma-es5-shim": "0.0.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-react-jsx-preprocessor": "^0.1.1",
+    "karma-react-preprocessor": "0.0.2",
+    "react-tools": "^0.12.2"
+  }
+}
