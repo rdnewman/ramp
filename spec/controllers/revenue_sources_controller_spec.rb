@@ -123,6 +123,7 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _row = RevenueSource.find_by_id(source.id)
         _oldtime = _row.updated_at
         _params = { name: "#{source.name}CHANGE" }
+        sleep 5.seconds
 
         # test
         put :update, :format => :json, id: source.id, revenue_source: _params
