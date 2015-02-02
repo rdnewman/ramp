@@ -1,6 +1,7 @@
 module ApplicationHelper
 
-  # flash message typing for Bootstrap display
+  ##
+  # Selects a Bootstrap class based on +level+ of a flash message
   def flash_class(level)
     case level
     when 'notice'
