@@ -123,13 +123,15 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _row = RevenueSource.find_by_id(source.id)
         _oldtime = _row.updated_at
         _params = { name: "#{source.name}CHANGE" }
+        sleep 5.seconds
 
         sleep 0.6  # assure it is sufficiently later (server time drift)
 
         # test
         put :update, format: :json, id: source.id, revenue_source: _params
         json_response = JSON(response.body)
-        expect(json_response['updated_at']).to be > _oldtime
+        _newtime = Time.zone.parse(json_response['updated_at'])
+        expect(_newtime).to be > _oldtime
       end
 
       it 'that is missing valid parameter, responds with bad request status (400)' do

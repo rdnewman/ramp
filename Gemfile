@@ -27,4 +27,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'jasmine-rails'
+  gem 'phantomjs', '< 1.9.8'
 end
