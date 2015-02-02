@@ -2,9 +2,9 @@
 
 var InsertableField = React.createClass({
   propTypes: {
-    id: React.PropTypes.string.isRequired,
+    id:         React.PropTypes.string.isRequired,
     fieldTable: React.PropTypes.string.isRequired,
-    fieldName: React.PropTypes.string.isRequired,
+    fieldName:  React.PropTypes.string.isRequired,
     updateItem: React.PropTypes.func.isRequired
   },
   getDefaultProps : function() {
