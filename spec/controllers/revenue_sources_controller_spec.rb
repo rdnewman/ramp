@@ -82,38 +82,38 @@ RSpec.describe RevenueSourcesController, type: :controller do
       }.to raise_error ActionController::ParameterMissing
     end
 
-    context 'as HTML' do
+    describe 'as HTML' do
       it 'succeeds if well formed input and returns to list' do
         _params = { name: "#{source.name}CHANGE" }
-        put :update, :format => :html, id: source.id, revenue_source: _params
+        put :update, format: :html, id: source.id, revenue_source: _params
         expect(response).to redirect_to revenue_sources_path
       end
 
       it 'responds with :bad_request if missing name parameter' do
         Rails.logger.info 'returns to list if missing name parameter'
         _params = {b: 'something'}
-        put :update, :format => :html, id: source.id, revenue_source: _params
+        put :update, format: :html, id: source.id, revenue_source: _params
         expect(response).to have_http_status :bad_request
       end
 
       it 'returns to list if missing name parameter' do
         Rails.logger.info 'returns to list if missing name parameter'
         _params = {b: 'something'}
-        put :update, :format => :html, id: source.id, revenue_source: _params
+        put :update, format: :html, id: source.id, revenue_source: _params
         expect(response.location).to eq revenue_sources_url
       end
     end
 
-    context 'as JSON' do
+    describe 'as JSON' do
       it 'succeeds if well formed input' do
         _params = { name: "#{source.name}CHANGE" }
-        put :update, :format => :json, id: source.id, revenue_source: _params
+        put :update, format: :json, id: source.id, revenue_source: _params
         expect(response).to be_success
       end
 
       it 'that is well-formed, responds with JSON showing changed name' do
         _params = { name: "#{source.name}CHANGE" }
-        put :update, :format => :json, id: source.id, revenue_source: _params
+        put :update, format: :json, id: source.id, revenue_source: _params
         json_response = JSON(response.body)
         expect(json_response['name']).to eq _params[:name]
       end
@@ -123,9 +123,8 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _row = RevenueSource.find_by_id(source.id)
         _oldtime = _row.updated_at
         _params = { name: "#{source.name}CHANGE" }
-        sleep 5.seconds
 
-        sleep 0.6  # assure it is sufficiently later (server time drift)
+        sleep 3.seconds  # assure it is sufficiently later (server time drift)
 
         # test
         put :update, format: :json, id: source.id, revenue_source: _params
@@ -152,13 +151,50 @@ RSpec.describe RevenueSourcesController, type: :controller do
         _params = {b: 'something'}
 
         # test
-        put :update, :format => :json, id: source.id, revenue_source: _params
+        put :update, format: :json, id: source.id, revenue_source: _params
         json_response = JSON(response.body)
         _newtime = "\"#{json_response['updated_at']}\""
         expect(_newtime).to eq _oldtime
       end
     end
 
+  end
+
+  describe "'DELETE'" do
+    let(:source) { FactoryGirl.create(:revenue_source) }
+
+    it 'removes item' do
+      # setup
+      _item = RevenueSource.find_by_id(source.id)
+
+      # test
+      expect {
+        delete :destroy, id: source.id
+      }.to change{RevenueSource.all.count}.by(-1)
+    end
+
+    describe 'as HTML' do
+      it 'redirects to index' do
+        # setup
+        _item = RevenueSource.find_by_id(source.id)
+
+        # test
+        delete :destroy, format: :html, id: source.id
+        expect(response).to redirect_to revenue_sources_path
+      end
+    end
+
+    describe 'as JSON' do
+      it 'returns an empty object' do
+        # setup
+        _item = RevenueSource.find_by_id(source.id)
+
+        # test
+        delete :destroy, format: :json, id: source.id
+        json_response = JSON(response.body)
+        expect(json_response).to be {}
+      end
+    end
   end
 
 end
