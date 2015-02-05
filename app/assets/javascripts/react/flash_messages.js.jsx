@@ -21,7 +21,10 @@ var FlashMessages = React.createClass({
             _level = message[0];
             _text  = message[1];
             return (
-              <div key={index} className={this._flash_class(_level)}>
+              <div key={index} className={this._flash_class(_level)} role='alert'>
+                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
                 {_text}
               </div>
             );
@@ -34,15 +37,17 @@ var FlashMessages = React.createClass({
   },
 
   _flash_class: function(level) {
-    var _result = 'alert alert-error';
+    var _result = 'alert alert-dismissible ';
     if (level === 'notice') {
-      _result = 'alert alert-info';
+      _result = _result + 'alert-info';
     } else if (level === 'success') {
-      _result = 'alert alert-success';
+      _result = _result + 'alert-success';
     } else if (level === 'error') {
-      _result = 'alert alert-error';
+      _result = _result + 'alert-error';
     } else if (level === 'alert') {
-      _result = 'alert alert-error';
+      _result = _result + 'alert-error';
+    } else {
+      _result = _result + 'alert-error';
     }
     return _result;
   }
@@ -76,4 +81,3 @@ $(document).ready(function() {
     handleFlashMessageHeader(flashDiv, xhr);
   });
 });
-
