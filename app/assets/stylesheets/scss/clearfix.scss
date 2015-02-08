@@ -1,0 +1,18 @@
+// Clearfix.  As described in http://adamkaplan.me/css-clearfix (2/8/2014).
+//
+// To use, just extend in target class:
+//   .row {
+//     @extend %clearfix;
+//     [blah blah]
+//   }
+//
+%clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+   clear: both;
+  }
+}
