@@ -1,6 +1,6 @@
 class RevenueSourcesController < ApplicationController
   respond_to :html, only: [:index]
-  respond_to :json, only: [:index, :update]
+  respond_to :json, only: [:index, :create, :update]
 
   def index
     respond_with do |format|
@@ -17,16 +17,22 @@ class RevenueSourcesController < ApplicationController
     _params = revenue_source_params
     if _params.empty?
       flash[:error] = "Unable to add; client error."
-      redirect_to revenue_sources_path, status: :bad_request
+      respond_with do |format|
+        format.json { render json: {} }
+        format.html { redirect_to revenue_sources_path, status: :bad_request }
+      end
     else
       begin
-        RevenueSource.create(_params)
+        _source = RevenueSource.create(_params)
         flash[:success] = "Added #{_params[:name]}."
       rescue StandardError => e
         Rails.logger.error "[RevenueSourcesController#create] failed, error = #{e.inspect}"
         flash[:error] = "Unable to add #{_params[:name]}."
       end
-      redirect_to revenue_sources_path
+      respond_with do |format|
+        format.json { render json: _source }
+        format.html { redirect_to revenue_sources_path }
+      end
     end
   end
 

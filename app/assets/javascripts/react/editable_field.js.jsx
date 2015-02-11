@@ -70,14 +70,16 @@ var EditableField = React.createClass({
   render: function() {
     if (this.state.editing) {
       return (
-        <form>
+        <form className='editable'>
           <input type='text' ref='editableField' defaultValue={this.props.value}/>
-          <button type='submit' className='btn btn-primary btn-sm' onClick={this._onSubmit} >
-            <i className='glyphicon glyphicon-ok' />
-          </button>
-          <button type='button' className='btn btn-default btn-sm' onClick={this._onCancel} >
-            <i className='glyphicon glyphicon-remove' />
-          </button>
+          <div className='btn-tiny-panel'>
+            <button type='submit' className='btn btn-primary btn-tiny' onClick={this._onSubmit} >
+              <i className='glyphicon glyphicon-ok' />
+            </button>
+            <button type='button' className='btn btn-default btn-tiny' onClick={this._onCancel} >
+              <i className='glyphicon glyphicon-menu-down' />
+            </button>
+          </div>
         </form>
       );
     } else {
