@@ -18,7 +18,7 @@ class RevenueSourcesController < ApplicationController
     if _params.empty?
       flash[:error] = "Unable to add; client error."
       respond_with do |format|
-        format.json { render json: {} }
+        format.json { render json: {}, status: :bad_request }
         format.html { redirect_to revenue_sources_path, status: :bad_request }
       end
     else

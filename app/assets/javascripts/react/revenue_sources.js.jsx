@@ -92,7 +92,7 @@ var RevenueSourceNewItem = React.createClass({
               <i className='glyphicon glyphicon-plus' />
             </button>
             <button type='button' className='btn btn-default btn-tiny' onClick={this._onCancel} >
-              <i className='glyphicon glyphicon-menu-down' />
+              <i className='glyphicon glyphicon-ban-circle' />
             </button>
           </div>
         </form>
