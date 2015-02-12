@@ -1,0 +1,11 @@
+form.editable {
+  -webkit-transform: translateY(-8%);
+  -ms-transform: translateY(-8%);
+  transform: translateY(-8%);
+}
+
+.editable {
+  &:hover {
+    border-bottom: 1px dotted;
+  }
+}

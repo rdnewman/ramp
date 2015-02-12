@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'revenue_sources#index'
 
-  resources :revenue_sources, only: [:index, :new, :create, :update]
+  resources :revenue_sources, except: [:edit, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
