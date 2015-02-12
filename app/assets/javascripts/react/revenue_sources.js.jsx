@@ -83,11 +83,9 @@ var RevenueSourceNewItem = React.createClass({
   },
 
   _renderForm: function() {
-console.log('in _renderForm')
     if (this.state.editing) {
-console.log('editing')
       return (
-        <form key='add-form' className='editable='>
+        <form key='addform' className='editable'>
           <input type='text' ref='insertableField' defaultValue={this.props.value}/>
           <div className='btn-tiny-panel'>
             <button type='submit' className='btn btn-success btn-tiny' onClick={this._onSubmit} >
@@ -105,11 +103,9 @@ console.log('editing')
   },
 
   _renderButton: function() {
-console.log('in _renderButton')
     if (!(this.state.editing)) {
-console.log('not editing')
       return (
-        <button key='add-button' type='submit' className='btn btn-xs btn-add' onClick={this._onDisplay} >
+        <button key='addbutton' type='submit' className='btn btn-xs btn-add' onClick={this._onDisplay} >
           <i className='glyphicon glyphicon-plus'/>
           {this._renderButtonText()}
         </button>
@@ -125,8 +121,8 @@ console.log('not editing')
         {this._renderForm()}
         {this._renderButton()}
       </div>
-      //  <ReactCSSTransitionGroup transitionName='new-item'>
-      //  </ReactCSSTransitionGroup>
+      //<ReactCSSTransitionGroup component='div' transitionName='newitem'>
+      //</ReactCSSTransitionGroup>
     );
   }
 });

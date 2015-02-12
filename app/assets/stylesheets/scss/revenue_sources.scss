@@ -2,10 +2,6 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
-new-item-enter {
-  transition: all 0.3s ease 0s;
-}
-
 button.btn {
 }
 
@@ -46,4 +42,20 @@ button.btn {
   button.btn:not(:first-of-type) {
     margin: .2em 0 0;
   }
+}
+
+newitem-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+newitem-enter.newitem-enter-active {
+  opacity: 1;
+}
+
+newitem-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+newitem-leave.newitem-leave-active {
+  opacity: 0.01;
 }
