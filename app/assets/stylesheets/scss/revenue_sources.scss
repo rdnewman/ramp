@@ -3,11 +3,59 @@
   They will automatically be included in application.css.
 */
 button.btn {
-  margin-left: .5em;
 }
 
-.editable {
-  &:hover {
-    border-bottom: 1px dotted;
+.btn-add {
+  @extend .btn-success;
+  margin-bottom: 1em;
+}
+
+.btn-remove {
+  @extend .btn-danger;
+  margin-left: 2em;
+}
+
+.btn-tiny {
+  @extend .btn-xs;
+  font-size: 8px;
+}
+
+.btn-text {
+  font-weight: bolder;
+  margin-left: .7em;
+}
+
+.btn-tiny-panel {
+  display: inline-block;
+  width: 1.3em;
+  margin-left: .2em;
+
+  position: relative;
+  top: .4em;
+
+  button.btn {
+    display: block;
+    line-height: inherit;
+    margin: 0;
   }
+
+  button.btn:not(:first-of-type) {
+    margin: .2em 0 0;
+  }
+}
+
+newitem-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+newitem-enter.newitem-enter-active {
+  opacity: 1;
+}
+
+newitem-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+newitem-leave.newitem-leave-active {
+  opacity: 0.01;
 }
