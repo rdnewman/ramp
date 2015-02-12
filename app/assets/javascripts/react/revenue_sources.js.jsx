@@ -178,9 +178,6 @@ var RevenueSourceListItem = React.createClass({
     );
   }
 });
-//<button className='btn btn-tiny btn-remove' onClick={this._onDelete} >
-//  <i className='glyphicon glyphicon-remove' />
-//</button>
 
 var RevenueSourcesSection = React.createClass({
   getInitialState: function() {
@@ -222,7 +219,14 @@ var RevenueSourcesSection = React.createClass({
 
   _fetchSuccess: function(data) {
     if (this.isMounted()) {
-      this.setState({items: data});
+      // build objects of objects, keyed on id
+      var hash = data.reduce(function(map, obj) {
+        id = obj.id
+        delete obj.id
+        map[id] = obj;
+        return map;
+      }, {});
+      this.setState({items: hash});
     }
   },
 
@@ -230,14 +234,27 @@ var RevenueSourcesSection = React.createClass({
     console.error(this.props.url, status, err.toString());
   },
 
-  _sortNames: function(itemA, itemB) {
+  _sortByName: function(itemA, itemB) {
     var aName = itemA.name.toLowerCase();
     var bName = itemB.name.toLowerCase();
     return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
   },
 
+  _sortedIds: function() {
+    var _sortable = [];
+    var _sorted = [];
+    for (var _key in this.state.items) {
+      _sortable.push({id: _key, name: this.state.items[_key].name});
+    }
+    _sortable.sort(this._sortByName);
+    for (var _i = 0, _len = _sortable.length; _i < _len; ++_i) {
+      _sorted.push(_sortable[_i].id)
+    }
+    return _sorted;
+  },
+
   _renderItems: function() {
-    _keys = Object.keys(this.state.items.sort(this._sortNames));
+    _keys = this._sortedIds();
     return _keys.map(function(key) {
       return <RevenueSourceListItem key={key} id={key} value={this.state.items[parseInt(key)]} updateItem={this._updateItem} deleteItem={this._deleteItem}/>;
     }.bind(this))
